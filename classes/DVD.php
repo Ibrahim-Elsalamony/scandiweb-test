@@ -1,7 +1,7 @@
 <?php
 require_once 'Product.php';
 
-class Clothing extends Product
+class DVD extends Product
 {
     private $size;
 
@@ -35,8 +35,8 @@ class Clothing extends Product
 
     public function display()
     {
-        parent::display();
-        echo ", Size: " . $this->size;
+        // parent::display();
+        // echo ", Size: " . $this->size;
     }
 
     // Getter and setter for size

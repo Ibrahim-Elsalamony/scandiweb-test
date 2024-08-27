@@ -1,5 +1,5 @@
 import Vue from "vue";
-import App from "../App.vue"; // Adjust path based on your directory structure
+import App from "../../App.vue"; // Adjust path based on your directory structure
 
 Vue.config.productionTip = false;
 

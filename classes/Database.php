@@ -2,9 +2,9 @@
 class Database
 {
     private $host = "localhost";
-    private $db_name = "your_database_name";
-    private $username = "your_username";
-    private $password = "your_password";
+    private $db_name = "scandiweb-test";
+    private $username = "root";
+    private $password = "";
     public $conn;
 
     public function getConnection()

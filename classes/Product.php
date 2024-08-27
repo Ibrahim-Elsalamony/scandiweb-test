@@ -35,7 +35,7 @@ abstract class Product
     // Common method to display product details
     public function display()
     {
-        echo "Product: " . $this->name . ", Price: $" . $this->price;
+        // echo "Product: " . $this->name . ", Price: $" . $this->price;
     }
 
     // Getters and setters

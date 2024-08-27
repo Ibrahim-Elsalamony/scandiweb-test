@@ -64,7 +64,7 @@ header hr {
   float: left;
   width: calc(25% - 20px);
   margin: 10px;
-  height: 150px;
+  height: 200px;
   border-radius: 10px;
 }
 
@@ -121,4 +121,8 @@ footer hr {
 
 a {
   text-decoration: none;
+}
+
+.product-info {
+  text-align: center;
 }

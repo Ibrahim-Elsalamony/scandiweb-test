@@ -1,8 +1,9 @@
 <?php
 // Include necessary classes
-require_once 'Database.php';
-require_once 'Electronics.php';
-require_once 'Clothing.php';
+require_once '../classes/Database.php';
+require_once '../classes/DVD.php';
+require_once '../classes/Furniture.php';
+require_once '../classes/Book.php';
 
 // Create a Database instance
 $database = new Database();
@@ -13,11 +14,14 @@ $productType = $_POST['type'] ?? null;
 
 if ($productType) {
     switch ($productType) {
-        case 'electronics':
-            $product = new Electronics($db, $_POST['name'], $_POST['price'], $_POST['warranty'], $_POST['id']);
+        case 'DVD':
+            $product = new DVD($db, $_POST['name'], $_POST['price'], $_POST['size'], $_POST['id']);
             break;
-        case 'clothing':
-            $product = new Clothing($db, $_POST['name'], $_POST['price'], $_POST['size'], $_POST['id']);
+        case 'furniture':
+            $product = new Furniture($db, $_POST['name'], $_POST['price'], $_POST['height'], $_POST['width'], $_POST['length'], $_POST['id']);
+            break;
+        case 'book':
+            $product = new Book($db, $_POST['name'], $_POST['price'], $_POST['weight'], $_POST['id']);
             break;
         default:
             echo json_encode(["message" => "Invalid product type."]);
