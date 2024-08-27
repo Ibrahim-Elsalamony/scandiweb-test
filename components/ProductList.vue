@@ -4,8 +4,9 @@
       <input type="checkbox" class="delete-checkbox" />
       <div class="product-info">
         {{ product.name }} - {{ product.price }}
-        <span v-if="product.type === 'electronics'"> (Electronics)</span>
-        <span v-else-if="product.type === 'clothing'"> (Clothing)</span>
+        <span v-if="product.type === 'DVD'"> DVD</span>
+        <span v-else-if="product.type === 'furniture'"> furniture</span>
+        <span v-else-if="product.type === 'book'"> book</span>
         <span v-else> (Other)</span>
       </div>
     </div>
@@ -35,7 +36,3 @@ export default {
   },
 };
 </script>
-
-<style scoped>
-/* Add styles specific to ProductList component here */
-</style>
