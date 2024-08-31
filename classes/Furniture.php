@@ -7,55 +7,57 @@ class Furniture extends Product
     private $width;
     private $length;
 
-    public function __construct($db, $name = null, $price = null, $height = null, $width = null, $length = null, $id = null)
+    public function __construct($db, $id = null, $sku, $name = null, $price = null, $height = null, $width = null, $length = null, $product_type = null)
     {
-        parent::__construct($db, $name, $price, $id);
+        parent::__construct($db, $id, $sku, $name, $price, $product_type);
         $this->height = $height;
         $this->width = $width;
         $this->length = $length;
     }
 
-    // Override the save method to save clothing data
-    public function save()
+
+    // Override the save method to save Furniture data
+    protected function fetchSpecificData($pdo)
     {
-        if ($this->id) {
-            $query = "UPDATE products SET name = :name, price = :price, height = :height, width = :width, length = :length WHERE id = :id";
-        } else {
-            $query = "INSERT INTO products (name, price, height,width,length) VALUES (:name, :price, :height,:width,:length)";
-        }
+        $stmt = $pdo->prepare("SELECT height, width, length FROM furniture WHERE id = ?");
+        $stmt->execute([$this->id]);
+        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $stmt = $this->db->prepare($query);
-
-        $stmt->bindParam(':name', $this->name);
-        $stmt->bindParam(':price', $this->price);
-        $stmt->bindParam(':height', $this->height);
-        $stmt->bindParam(':width', $this->width);
-        $stmt->bindParam(':length', $this->length);
-
-        if ($this->id) {
-            $stmt->bindParam(':id', $this->id);
-        }
-
-        $stmt->execute();
+        $this->height = $row['height'] ?? null;
+        $this->width = $row['width'] ?? null;
+        $this->length = $row['length'] ?? null;
     }
 
     public function display()
     {
-        // parent::display();
-        // echo ", Height: " . $this->height;
+        parent::display();
+        echo "Dimensions (HxWxL): {$this->height} x {$this->width} x {$this->length}<br>";
     }
 
-    // Getter and setter for size
-    public function getHeight()
+    public function toArray()
     {
-        return $this->height;
+        return [
+            'id' => $this->id,
+            'sku' => $this->sku,
+            'name' => $this->name,
+            'price' => $this->price,
+            'type' => 'furniture',
+            'height' => $this->height,
+            'width' => $this->width,
+            'length' => $this->length,
+        ];
     }
 
-    public function setHeight($height)
-    {
-        $this->height = $height;
-    }
 
+    // Override the save method to save furniture data
+    public function save() {}
+
+
+    // Override the delete method to delete Furniture data
+
+
+
+    // Getter and setter for width
     public function getWidth()
     {
         return $this->width;
@@ -66,6 +68,7 @@ class Furniture extends Product
         $this->width = $width;
     }
 
+    // Getter and setter for length
     public function getLength()
     {
         return $this->length;

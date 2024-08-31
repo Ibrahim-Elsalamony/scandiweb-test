@@ -15,13 +15,13 @@ $productType = $_POST['type'] ?? null;
 if ($productType) {
     switch ($productType) {
         case 'DVD':
-            $product = new DVD($db, $_POST['name'], $_POST['price'], $_POST['size'], $_POST['id']);
+            $product = new DVD($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['size'], $productType);
             break;
         case 'furniture':
-            $product = new Furniture($db, $_POST['name'], $_POST['price'], $_POST['height'], $_POST['width'], $_POST['length'], $_POST['id']);
+            $product = new Furniture($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['height'], $_POST['width'], $_POST['length'], $productType);
             break;
         case 'book':
-            $product = new Book($db, $_POST['name'], $_POST['price'], $_POST['weight'], $_POST['id']);
+            $product = new Book($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['weight'], $productType);
             break;
         default:
             echo json_encode(["message" => "Invalid product type."]);

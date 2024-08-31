@@ -2,43 +2,47 @@
 abstract class Product
 {
     protected $id;
+    protected $sku;
     protected $name;
     protected $price;
     protected $db;
+    protected $product_type;
 
-    public function __construct($db, $name = null, $price = null, $id = null)
+    public function __construct($db, $id = null, $sku = null, $name = null, $price = null, $product_type = null)
     {
         $this->db = $db;
+        $this->id = $id;
+        $this->sku = $sku;
         $this->name = $name;
         $this->price = $price;
-        $this->id = $id;
+        $this->product_type = $product_type;
     }
+
+
+    // Abstract method to fetch all products
+    abstract protected function fetchSpecificData($pdo);
+
+    // General method to output product details
+    public function display()
+    {
+        echo "ID: {$this->id}<br>";
+        echo "SKU: {$this->sku}<br>";
+        echo "Name: {$this->name}<br>";
+        echo "Price: {$this->price}<br>";
+        echo "Type: {$this->product_type}<br>";
+    }
+
 
     // Abstract method to save the product
     abstract public function save();
 
-    // Method to load data from the database
-    public function load($id)
-    {
-        $query = "SELECT * FROM products WHERE id = :id";
-        $stmt = $this->db->prepare($query);
-        $stmt->bindParam(':id', $id);
-        $stmt->execute();
 
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
-        $this->setId($row['id']);
-        $this->setName($row['name']);
-        $this->setPrice($row['price']);
-    }
+    // Abstract method to delete products
 
-    // Common method to display product details
-    public function display()
-    {
-        // echo "Product: " . $this->name . ", Price: $" . $this->price;
-    }
 
-    // Getters and setters
+
+    // Getters and setters fot Id
     public function getId()
     {
         return $this->id;
@@ -49,6 +53,18 @@ abstract class Product
         $this->id = $id;
     }
 
+    // Getters and setters fot SKU
+    public function getSku()
+    {
+        return $this->sku;
+    }
+
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    }
+
+    // Getters and setters fot Name
     public function getName()
     {
         return $this->name;
@@ -59,6 +75,7 @@ abstract class Product
         $this->name = $name;
     }
 
+    // Getters and setters fot Price
     public function getPrice()
     {
         return $this->price;
@@ -67,5 +84,16 @@ abstract class Product
     public function setPrice($price)
     {
         $this->price = $price;
+    }
+
+    // Getters and setters fot Product Type
+    public function getType()
+    {
+        return $this->product_type;
+    }
+
+    public function setType($product_type)
+    {
+        $this->product_type = $product_type;
     }
 }
