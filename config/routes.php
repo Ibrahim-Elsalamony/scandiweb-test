@@ -1,13 +1,8 @@
 <?php
 
-// return [
-//     '/' => 'views/show.php',
-//     '/add' => 'views/add.php',
-// ];
-
 $routes = [
     '/' => 'views/show.php',
-    '/add' => 'views/add.php',
+    '/addproduct' => 'views/add.php',
 ];
 
 // Create Router and Controller instances

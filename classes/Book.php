@@ -1,13 +1,14 @@
 <?php
-require_once 'Product.php';
+require_once __DIR__ . '/Product.php';
+// require_once 'Product.php';
 
 class Book extends Product
 {
     private $weight;
 
-    public function __construct($db, $id = null, $sku, $name = null, $price = null, $weight = null, $product_type = null)
+    public function __construct($db, $product_type, $sku, $name = null, $price = null, $weight = null, $id = null)
     {
-        parent::__construct($db, $id, $sku, $name, $price, $product_type);
+        parent::__construct($db, $product_type, $sku, $name, $price, $id);
         $this->weight = $weight;
     }
 
@@ -42,11 +43,31 @@ class Book extends Product
 
 
     // Override the save method to save Book data
-    public function save() {}
+    protected function saveSpecific()
+    {
+        $query = "INSERT INTO book (id, weight) VALUES (:id, :weight)";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':weight', $this->weight);
+
+        return $stmt->execute();
+    }
+    // the save method to save DVD data
+    public function save()
+    {
+        if (parent::save()) {
+            return $this->saveSpecific();
+        }
+        return false;
+    }
 
 
     // Override the delete method to delete Book data
-
+    public function delete()
+    {
+        return $this->deleteFromDatabase('book') && $this->deleteFromDatabase('products');
+    }
 
 
     // Getter and setter for weight

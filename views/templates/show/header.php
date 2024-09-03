@@ -28,9 +28,9 @@
                     <h2>Product List</h2>
                     <ul>
                         <li class="button">
-                            <a href="/add">Add</a>
+                            <a href="/addproduct">Add</a>
                         </li>
-                        <li class="button" id="delete-product">Mass Delete</li>
+                        <li class="button" id="delete-product-btn">Mass Delete</li>
                     </ul>
                 </div>
                 <hr />

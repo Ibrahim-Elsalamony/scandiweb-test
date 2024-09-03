@@ -5,9 +5,9 @@ class DVD extends Product
 {
     private $size;
 
-    public function __construct($db, $id = null, $sku, $name = null, $price = null, $size = null, $product_type = null)
+    public function __construct($db, $product_type, $sku, $name = null, $price = null, $size = null, $id = null)
     {
-        parent::__construct($db, $id, $sku, $name, $price, $product_type);
+        parent::__construct($db, $product_type, $sku, $name, $price, $id);
         $this->size = $size;
     }
 
@@ -15,7 +15,7 @@ class DVD extends Product
     // Override the save method to save DVD data
     protected function fetchSpecificData($pdo)
     {
-        $stmt = $pdo->prepare("SELECT size FROM dvds WHERE id = ?");
+        $stmt = $pdo->prepare("SELECT size FROM dvd WHERE id = ?");
         $stmt->execute([$this->id]);
         $row = $stmt->fetch(PDO::FETCH_ASSOC);
 
@@ -42,11 +42,33 @@ class DVD extends Product
 
 
     // Override the save method to save DVD data
-    public function save() {}
+    protected function saveSpecific()
+    {
+        $query = "INSERT INTO dvd (id, size) VALUES (:id, :size)";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':size', $this->size);
+
+        return $stmt->execute();
+    }
+    // the save method to save DVD data
+    public function save()
+    {
+        if (parent::save()) {
+            return $this->saveSpecific();
+        }
+        return false;
+    }
+
+
 
 
     // Override the delete method to delete DVD data
-
+    public function delete()
+    {
+        return $this->deleteFromDatabase('dvd') && $this->deleteFromDatabase('products');
+    }
 
 
     // Getter and setter for size

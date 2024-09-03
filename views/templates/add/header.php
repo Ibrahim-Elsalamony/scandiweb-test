@@ -18,24 +18,25 @@
     <!-- Include Vue components -->
     <script src="/assets/js/components/AddProductForm.js"></script>
     <!-- Include main Vue app script -->
-    <script src="/assets/js/vue-app.js"></script>
+    <!-- <script src="/assets/js/vue-app.js"></script> -->
+    <script src="/assets/js/submit-form.js"></script>
 </head>
 
-</body>
-<header>
-    <div class="nav-bar">
-        <div class="slider"></div>
-        <div class="container">
-            <div class="header-content">
-                <h2>Product Add</h2>
-                <ul>
-                    <li class="button" id="save-product">Save</li>
-                    <li class="button">
-                        <a href="/">Cancel</a>
-                    </li>
-                </ul>
+<body>
+    <header>
+        <div class="nav-bar">
+            <div class="slider"></div>
+            <div class="container">
+                <div class="header-content">
+                    <h2>Product Add</h2>
+                    <ul>
+                        <li class="button" id="saveProduct">Save</li>
+                        <li class="button">
+                            <a href="/">Cancel</a>
+                        </li>
+                    </ul>
+                </div>
+                <hr />
             </div>
-            <hr />
         </div>
-    </div>
-</header>
+    </header>

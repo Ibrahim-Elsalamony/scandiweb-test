@@ -1,40 +1,71 @@
 <?php
-// Include necessary classes
-require_once '../classes/Database.php';
-require_once '../classes/DVD.php';
-require_once '../classes/Furniture.php';
-require_once '../classes/Book.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/Product.php';
+require_once __DIR__ . '/../classes/DVD.php';
+require_once __DIR__ . '/../classes/Furniture.php';
+require_once __DIR__ . '/../classes/Book.php';
+require_once __DIR__ . '/../classes/ProductFactory.php';
 
-// Create a Database instance
+// Initialize the database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// Get the product type from the request
-$productType = $_POST['type'] ?? null;
-
-if ($productType) {
-    switch ($productType) {
-        case 'DVD':
-            $product = new DVD($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['size'], $productType);
-            break;
-        case 'furniture':
-            $product = new Furniture($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['height'], $_POST['width'], $_POST['length'], $productType);
-            break;
-        case 'book':
-            $product = new Book($db, $_POST['id'], $_POST['name'], $_POST['price'], $_POST['weight'], $productType);
-            break;
-        default:
-            echo json_encode(["message" => "Invalid product type."]);
-            exit;
-    }
-
-    // Save the product using the appropriate class
-    try {
-        $product->save();
-        echo json_encode(["message" => "Product saved successfully."]);
-    } catch (Exception $e) {
-        echo json_encode(["message" => "Error saving product: " . $e->getMessage()]);
-    }
-} else {
-    echo json_encode(["message" => "No product type specified."]);
+if (!$db) {
+    die("Database connection error");
 }
+
+
+// Retrieve form data
+$sku          = $_POST['sku'] ?? null;
+$name         = $_POST['name'] ?? null;
+$price        = $_POST['price'] ?? null;
+$product_type = $_POST['product_type'] ?? null;
+$size         = $_POST['size'] ?? null;
+$weight       = $_POST['weight'] ?? null;
+$height       = $_POST['height'] ?? null;
+$width        = $_POST['width'] ?? null;
+$length       = $_POST['length'] ?? null;
+
+
+// Validation
+if (empty($sku) || empty($name) || empty($price) || empty($product_type)) {
+    die("Required fields are missing.");
+}
+
+// Prepare specific data based on product type
+$specificData = [];
+switch ($product_type) {
+    case 'DVD':
+        $specificData['size'] = $size;
+        break;
+    case 'Book':
+        $specificData['weight'] = $weight;
+        break;
+    case 'Furniture':
+        $specificData['height'] = $height;
+        $specificData['width'] = $width;
+        $specificData['length'] = $length;
+        break;
+    default:
+        die("Invalid product type.");
+}
+
+try {
+    // Create the product instance using the factory
+    $product = ProductFactory::create($db, $product_type, $sku, $name, $price, $specificData);
+
+    // Save the product
+    if ($product->save()) {
+        // echo "Product and specific type data saved successfully.";
+        header("Location: /");
+        exit();
+    } else {
+        echo "Failed to save product data.";
+    }
+} catch (Exception $e) {
+    echo "Error: " . $e->getMessage();
+}
+
+// Close database connection
+$database = null;

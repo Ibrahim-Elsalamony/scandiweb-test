@@ -1,4 +1,13 @@
 body {
+  margin: 0;
+  padding: 0;
+  /*background-color: #f4f4f4; /* Light gray background color */
+  font-family: Arial, sans-serif; /* Font style */
+}
+
+input {
+  border-radius: 4px;
+  appearance: textfield;
 }
 
 .content {
@@ -38,13 +47,28 @@ header .nav-bar ul li {
 }
 
 .button {
-  background-color: #f0f3f4;
+  background-color: #dc143c;
+  color: #f0f3f4;
   text-align: center;
   margin: 10px;
   border-radius: 5px; /* Slight rounding of corners */
   box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); /* Shadow on the right and bottom */
   transition: box-shadow 0.3s ease;
   cursor: pointer;
+}
+
+.button:hover {
+  background-color: #cd5c5c;
+  color: #fff8dc;
+}
+
+/* Style applied when the button is clicked */
+.button.clicked {
+  transform: scale(0.85); /* Slightly shrink the button */
+}
+
+a {
+  color: #f0f3f4;
 }
 
 header hr {
@@ -101,7 +125,7 @@ footer hr {
 }
 
 .switcher {
-  padding: 40px 10px;
+  margin-top: 40px;
 }
 
 .switcher label {
@@ -125,4 +149,10 @@ a {
 
 .product-info {
   text-align: center;
+}
+
+.error {
+  color: red;
+  font-size: 0.9em;
+  margin-top: 5px;
 }

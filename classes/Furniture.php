@@ -7,9 +7,9 @@ class Furniture extends Product
     private $width;
     private $length;
 
-    public function __construct($db, $id = null, $sku, $name = null, $price = null, $height = null, $width = null, $length = null, $product_type = null)
+    public function __construct($db, $product_type, $sku, $name = null, $price = null, $height = null, $width = null, $length = null, $id = null)
     {
-        parent::__construct($db, $id, $sku, $name, $price, $product_type);
+        parent::__construct($db, $product_type, $sku, $name, $price, $id);
         $this->height = $height;
         $this->width = $width;
         $this->length = $length;
@@ -50,12 +50,45 @@ class Furniture extends Product
 
 
     // Override the save method to save furniture data
-    public function save() {}
+    protected function saveSpecific()
+    {
+        $query = "INSERT INTO furniture (id, height, width, length) VALUES (:id, :height, :width, :length)";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':id', $this->id);
+        $stmt->bindParam(':height', $this->height);
+        $stmt->bindParam(':width', $this->width);
+        $stmt->bindParam(':length', $this->length);
+
+        return $stmt->execute();
+    }
+    // the save method to save DVD data
+    public function save()
+    {
+        if (parent::save()) {
+            return $this->saveSpecific();
+        }
+        return false;
+    }
 
 
     // Override the delete method to delete Furniture data
+    public function delete()
+    {
+        return $this->deleteFromDatabase('furniture') && $this->deleteFromDatabase('products');
+    }
 
 
+    // Getter and setter for height
+    public function getHeight()
+    {
+        return $this->height;
+    }
+
+    public function setHeight($height)
+    {
+        $this->width = $height;
+    }
 
     // Getter and setter for width
     public function getWidth()

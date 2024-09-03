@@ -8,7 +8,7 @@ abstract class Product
     protected $db;
     protected $product_type;
 
-    public function __construct($db, $id = null, $sku = null, $name = null, $price = null, $product_type = null)
+    public function __construct($db, $product_type, $sku = null, $name = null, $price = null, $id = null)
     {
         $this->db = $db;
         $this->id = $id;
@@ -16,6 +16,29 @@ abstract class Product
         $this->name = $name;
         $this->price = $price;
         $this->product_type = $product_type;
+    }
+
+
+
+    // Abstract method to save the product    
+    abstract protected function saveSpecific();
+
+    public function save()
+    {
+        $query = "INSERT INTO products (sku, name, price, product_type) VALUES (:sku, :name, :price, :product_type)";
+        $stmt = $this->db->prepare($query);
+
+        $stmt->bindParam(':sku', $this->sku);
+        $stmt->bindParam(':name', $this->name);
+        $stmt->bindParam(':price', $this->price);
+        $stmt->bindParam(':product_type', $this->product_type);
+
+        if ($stmt->execute()) {
+            $this->id = $this->db->lastInsertId();
+            return true;
+        } else {
+            return false;
+        }
     }
 
 
@@ -33,13 +56,17 @@ abstract class Product
     }
 
 
-    // Abstract method to save the product
-    abstract public function save();
-
-
 
     // Abstract method to delete products
+    abstract public function delete();
 
+    protected function deleteFromDatabase($tableName)
+    {
+        $sql = "DELETE FROM $tableName WHERE id = :id";
+        $stmt = $this->db->prepare($sql);
+        $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
+        return $stmt->execute();
+    }
 
 
     // Getters and setters fot Id

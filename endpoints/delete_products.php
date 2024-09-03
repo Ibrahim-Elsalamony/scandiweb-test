@@ -1,28 +1,49 @@
 <?php
-// Include necessary classes
-require_once '../classes/Database.php';
-require_once '../classes/DVD.php';
-require_once '../classes/Furniture.php';
-require_once '../classes/Book.php';
+require_once __DIR__ . '/../config/config.php';
+require_once __DIR__ . '/../classes/Database.php';
+require_once __DIR__ . '/../classes/Product.php';
+require_once __DIR__ . '/../classes/DVD.php';
+require_once __DIR__ . '/../classes/Book.php';
+require_once __DIR__ . '/../classes/Furniture.php';
+require_once __DIR__ . '/../classes/ProductFactory.php';
 
-// Create a Database instance
+// Initialize the database connection
 $database = new Database();
 $db = $database->getConnection();
 
-// Check if the form was submitted
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['products'])) {
-    // Get the selected products from the form
-    $selectedProducts = $_POST['products'];
-
-    // Function to delete multiple products
-    function deleteMultipleProducts(array $selectedProducts, $db) {}
-
-    // Call the delete function with the selected products
-    deleteMultipleProducts($selectedProducts, $db);
-
-    // Redirect back to the product list page or display a success message
-    header('Location: index.php');
-    exit;
-} else {
-    echo "No products selected for deletion.";
+if (!$db) {
+    die(json_encode(["success" => false, "message" => "Database connection error"]));
 }
+
+// Retrieve the data sent from the frontend
+$data = json_decode(file_get_contents('php://input'), true);
+$productIds = $data['ids'] ?? null;
+
+// Validate input data
+if (empty($productIds) || !is_array($productIds)) {
+    echo json_encode(["success" => false, "message" => "No products selected or invalid data."]);
+    exit();
+}
+
+// Begin transaction
+$db->beginTransaction();
+
+try {
+    foreach ($productIds as $id) {
+        $product = ProductFactory::makeDelete($db, $id);
+        if (!$product->delete()) {
+            throw new Exception("Failed to delete product with ID $id.");
+        }
+    }
+
+    // Commit transaction
+    $db->commit();
+    echo json_encode(["success" => true, "message" => "Products successfully deleted!"]);
+} catch (Exception $e) {
+    // Rollback transaction in case of error
+    $db->rollBack();
+    echo json_encode(["success" => false, "message" => "Error: " . $e->getMessage()]);
+}
+
+// Close database connection
+$database = null;
