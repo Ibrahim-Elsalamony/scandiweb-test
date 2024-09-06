@@ -28,13 +28,17 @@
             <div class="slider"></div>
             <div class="container">
                 <div class="header-content">
-                    <h2>Product Add</h2>
-                    <ul>
-                        <li class="button" id="saveProduct">Save</li>
-                        <li class="button">
-                            <a href="/">Cancel</a>
-                        </li>
-                    </ul>
+                    <div>
+                        <h2>Product Add</h2>
+                    </div>
+                    <div>
+                        <ul>
+                            <li class="button" id="saveProduct">Save</li>
+                            <li class="button">
+                                <a href="/">Cancel</a>
+                            </li>
+                        </ul>
+                    </div>
                 </div>
                 <hr />
             </div>

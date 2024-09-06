@@ -1,7 +1,7 @@
 <?php
 
 $routes = [
-    '/' => 'views/show.php',
+    '/' => 'views/product_list.php',
     '/addproduct' => 'views/add.php',
 ];
 

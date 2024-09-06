@@ -2,9 +2,9 @@ document.addEventListener("DOMContentLoaded", function () {
   const form = document.getElementById("productForm");
   const submitButton = document.getElementById("saveProduct");
   const productTypeSelect = document.getElementById("productType");
-  const dvdSection = document.getElementById("dvdSection");
-  const furnitureSection = document.getElementById("furnitureSection");
-  const bookSection = document.getElementById("bookSection");
+  const dvdSection = document.getElementById("DVD");
+  const furnitureSection = document.getElementById("Furniture");
+  const bookSection = document.getElementById("Book");
 
   function hideAllSections() {
     dvdSection.style.display = "none";

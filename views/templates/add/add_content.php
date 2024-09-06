@@ -50,16 +50,19 @@
                         </select>
                     </div>
 
-                    <div id="dvdSection" class="productSection">
+                    <div id="DVD" class="productSection">
                         <div class="result">
                             <div class="fill">
                                 <label for="size">Size (MB):</label>
                                 <input type="number" id="size" name="size" placeholder="Size (MB)" />
                             </div>
+                            <div>
+                                <p>*Please, provide size</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="furnitureSection" class="productSection">
+                    <div id="Furniture" class="productSection">
                         <div class="result">
                             <div class="fill">
                                 <label for="height">Height (CM):</label>
@@ -73,14 +76,20 @@
                                 <label for="length">Length (CM):</label>
                                 <input type="number" id="length" name="length" placeholder="Length (CM)" />
                             </div>
+                            <div>
+                                <p>*Please, provide dimensions</p>
+                            </div>
                         </div>
                     </div>
 
-                    <div id="bookSection" class="productSection">
+                    <div id="Book" class="productSection">
                         <div class="result">
                             <div class="fill">
                                 <label for="weight">Weight (KG):</label>
                                 <input type="number" id="weight" name="weight" placeholder="Weight (KG)" />
+                            </div>
+                            <div>
+                                <p>*Please, provide weight</p>
                             </div>
                         </div>
                     </div>

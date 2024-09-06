@@ -64,9 +64,7 @@ Vue.component("product-list", {
     },
   },
   mounted() {
-    setTimeout(() => {
-      this.fetchProducts();
-    }, 1000);
+    this.fetchProducts();
 
     const submitButton = document.getElementById("delete-product-btn"); // Add event listener for delete button
     submitButton.addEventListener("click", () =>

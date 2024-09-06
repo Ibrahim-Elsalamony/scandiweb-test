@@ -156,3 +156,10 @@ a {
   font-size: 0.9em;
   margin-top: 5px;
 }
+
+h2 {
+  display: block; /* Ensure it's displayed as a block element */
+  visibility: visible; /* Ensure it's visible */
+  opacity: 1; /* Ensure full opacity */
+  color: #000; /* Ensure text color is not transparent */
+}

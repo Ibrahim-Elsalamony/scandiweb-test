@@ -9,13 +9,7 @@
     <!-- My icon -->
     <link rel="icon" type="image/png" href="/assets/img/goal_4594166.png" />
     <title>Product List</title>
-    <!-- Include Vue.js CDN -->
-    <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
-    <!-- Include Vue components -->
-    <script src="/assets/js/components/ProductItem.js"></script>
-    <script src="/assets/js/components/ProductList.js"></script>
-    <!-- Include main Vue app script -->
-    <script src="/assets/js/vue-app.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script> <!-- Include jQuery -->
 </head>
 
 <body>
