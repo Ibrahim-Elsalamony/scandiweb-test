@@ -15,41 +15,7 @@ class Furniture extends Product
         $this->length = $length;
     }
 
-
-    // Override the save method to save Furniture data
-    protected function fetchSpecificData($pdo)
-    {
-        $stmt = $pdo->prepare("SELECT height, width, length FROM furniture WHERE id = ?");
-        $stmt->execute([$this->id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->height = $row['height'] ?? null;
-        $this->width = $row['width'] ?? null;
-        $this->length = $row['length'] ?? null;
-    }
-
-    public function display()
-    {
-        parent::display();
-        echo "Dimensions (HxWxL): {$this->height} x {$this->width} x {$this->length}<br>";
-    }
-
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'sku' => $this->sku,
-            'name' => $this->name,
-            'price' => $this->price,
-            'type' => 'furniture',
-            'height' => $this->height,
-            'width' => $this->width,
-            'length' => $this->length,
-        ];
-    }
-
-
-    // Override the save method to save furniture data
+    // helpful method to save the product for Furniture table
     protected function saveSpecific()
     {
         $query = "INSERT INTO furniture (id, height, width, length) VALUES (:id, :height, :width, :length)";
@@ -62,7 +28,8 @@ class Furniture extends Product
 
         return $stmt->execute();
     }
-    // the save method to save DVD data
+
+    // save the product for Furniture & Product table
     public function save()
     {
         if (parent::save()) {
@@ -71,44 +38,9 @@ class Furniture extends Product
         return false;
     }
 
-
-    // Override the delete method to delete Furniture data
+    // delete the product from Furniture & Product table
     public function delete()
     {
         return $this->deleteFromDatabase('furniture') && $this->deleteFromDatabase('products');
-    }
-
-
-    // Getter and setter for height
-    public function getHeight()
-    {
-        return $this->height;
-    }
-
-    public function setHeight($height)
-    {
-        $this->width = $height;
-    }
-
-    // Getter and setter for width
-    public function getWidth()
-    {
-        return $this->width;
-    }
-
-    public function setWidth($width)
-    {
-        $this->width = $width;
-    }
-
-    // Getter and setter for length
-    public function getLength()
-    {
-        return $this->length;
-    }
-
-    public function setLength($length)
-    {
-        $this->length = $length;
     }
 }

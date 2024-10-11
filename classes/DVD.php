@@ -11,37 +11,7 @@ class DVD extends Product
         $this->size = $size;
     }
 
-
-    // Override the save method to save DVD data
-    protected function fetchSpecificData($pdo)
-    {
-        $stmt = $pdo->prepare("SELECT size FROM dvd WHERE id = ?");
-        $stmt->execute([$this->id]);
-        $row = $stmt->fetch(PDO::FETCH_ASSOC);
-
-        $this->size = $row['size'] ?? null;
-    }
-
-    public function display()
-    {
-        parent::display();
-        echo "Size: {$this->size} MB<br>";
-    }
-
-    public function toArray()
-    {
-        return [
-            'id' => $this->id,
-            'sku' => $this->sku,
-            'name' => $this->name,
-            'price' => $this->price,
-            'type' => 'dvd',
-            'size' => $this->size,
-        ];
-    }
-
-
-    // Override the save method to save DVD data
+    // helpful method to save the product for DVD table
     protected function saveSpecific()
     {
         $query = "INSERT INTO dvd (id, size) VALUES (:id, :size)";
@@ -52,7 +22,8 @@ class DVD extends Product
 
         return $stmt->execute();
     }
-    // the save method to save DVD data
+
+    // save the product for DVD & Product table
     public function save()
     {
         if (parent::save()) {
@@ -61,24 +32,9 @@ class DVD extends Product
         return false;
     }
 
-
-
-
-    // Override the delete method to delete DVD data
+    // delete the product from DVD & Product table
     public function delete()
     {
         return $this->deleteFromDatabase('dvd') && $this->deleteFromDatabase('products');
-    }
-
-
-    // Getter and setter for size
-    public function getSize()
-    {
-        return $this->size;
-    }
-
-    public function setSize($size)
-    {
-        $this->size = $size;
     }
 }

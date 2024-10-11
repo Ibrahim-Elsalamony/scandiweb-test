@@ -4,7 +4,6 @@ class ProductFactory
 {
     public static function create($db, $product_type, $sku, $name, $price, $specificData = [])
     {
-        // Dynamically determine the class name
         $className = ucfirst($product_type);
 
         if (class_exists($className)) {

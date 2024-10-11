@@ -1,4 +1,5 @@
 <?php
+
 abstract class Product
 {
     protected $id;
@@ -19,10 +20,49 @@ abstract class Product
     }
 
 
-
-    // Abstract method to save the product    
+    // Abstract method to save Product    
     abstract protected function saveSpecific();
+    // Abstract method to delete products
+    abstract public function delete();
 
+
+    // Show all products in the main page
+    public static function getAllProducts(Database $db)
+    {
+        if (!$db) {
+            throw new Exception("Database connection error");
+        }
+
+        try {
+            $stmt = $db->getConnection()->prepare("
+            SELECT 
+                p.id,
+                p.sku,
+                p.name,
+                p.price,
+                p.product_type AS type,
+                b.weight,
+                d.size,
+                f.height,
+                f.width,
+                f.length
+            FROM products p
+            LEFT JOIN book b ON p.id = b.id
+            LEFT JOIN dvd d ON p.id = d.id
+            LEFT JOIN furniture f ON p.id = f.id
+        ");
+            $stmt->execute();
+            return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        } catch (PDOException $e) {
+            // Log the actual error for debugging (if needed)
+            error_log($e->getMessage());
+
+            // Throw a general error message
+            throw new Exception("Error fetching products");
+        }
+    }
+
+    // save Product
     public function save()
     {
         $query = "INSERT INTO products (sku, name, price, product_type) VALUES (:sku, :name, :price, :product_type)";
@@ -41,86 +81,12 @@ abstract class Product
         }
     }
 
-
-    // Abstract method to fetch all products
-    abstract protected function fetchSpecificData($pdo);
-
-    // General method to output product details
-    public function display()
-    {
-        echo "ID: {$this->id}<br>";
-        echo "SKU: {$this->sku}<br>";
-        echo "Name: {$this->name}<br>";
-        echo "Price: {$this->price}<br>";
-        echo "Type: {$this->product_type}<br>";
-    }
-
-
-
-    // Abstract method to delete products
-    abstract public function delete();
-
+    // delete Product
     protected function deleteFromDatabase($tableName)
     {
         $sql = "DELETE FROM $tableName WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         return $stmt->execute();
-    }
-
-
-    // Getters and setters fot Id
-    public function getId()
-    {
-        return $this->id;
-    }
-
-    public function setId($id)
-    {
-        $this->id = $id;
-    }
-
-    // Getters and setters fot SKU
-    public function getSku()
-    {
-        return $this->sku;
-    }
-
-    public function setSku($sku)
-    {
-        $this->sku = $sku;
-    }
-
-    // Getters and setters fot Name
-    public function getName()
-    {
-        return $this->name;
-    }
-
-    public function setName($name)
-    {
-        $this->name = $name;
-    }
-
-    // Getters and setters fot Price
-    public function getPrice()
-    {
-        return $this->price;
-    }
-
-    public function setPrice($price)
-    {
-        $this->price = $price;
-    }
-
-    // Getters and setters fot Product Type
-    public function getType()
-    {
-        return $this->product_type;
-    }
-
-    public function setType($product_type)
-    {
-        $this->product_type = $product_type;
     }
 }

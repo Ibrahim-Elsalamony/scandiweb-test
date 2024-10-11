@@ -1,8 +1,7 @@
 body {
   margin: 0;
   padding: 0;
-  /*background-color: #f4f4f4; /* Light gray background color */
-  font-family: Arial, sans-serif; /* Font style */
+  font-family: Arial, sans-serif;
 }
 
 input {
@@ -15,7 +14,7 @@ input {
 }
 
 .container {
-  width: 80%; /* Set the width to 80% of the page */
+  width: 80%;
   margin: auto;
 }
 
@@ -25,8 +24,8 @@ header .slider {
 
 .header-content {
   display: flex;
-  justify-content: space-between; /* Distribute space between h2 and ul */
-  align-items: center; /* Align items vertically centered */
+  justify-content: space-between;
+  align-items: center;
 }
 
 header .nav-bar h2 {
@@ -51,8 +50,8 @@ header .nav-bar ul li {
   color: #f0f3f4;
   text-align: center;
   margin: 10px;
-  border-radius: 5px; /* Slight rounding of corners */
-  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3); /* Shadow on the right and bottom */
+  border-radius: 5px;
+  box-shadow: 4px 4px 8px rgba(0, 0, 0, 0.3);
   transition: box-shadow 0.3s ease;
   cursor: pointer;
 }
@@ -62,9 +61,8 @@ header .nav-bar ul li {
   color: #fff8dc;
 }
 
-/* Style applied when the button is clicked */
 .button.clicked {
-  transform: scale(0.85); /* Slightly shrink the button */
+  transform: scale(0.85);
 }
 
 a {
@@ -74,8 +72,8 @@ a {
 header hr {
   border: 0;
   height: 2px;
-  background-color: #ccc; /* Adjust color to match your theme */
-  margin-top: -15px; /* Add some space above the line if needed */
+  background-color: #ccc;
+  margin-top: -15px;
 }
 
 .cart-container {
@@ -99,8 +97,8 @@ header hr {
 footer hr {
   border: 0;
   height: 2px;
-  background-color: #ccc; /* Adjust color to match your theme */
-  margin-top: 15px; /* Add some space above the line if needed */
+  background-color: #ccc;
+  margin-top: 15px;
 }
 
 .footer-content {
@@ -158,8 +156,8 @@ a {
 }
 
 h2 {
-  display: block; /* Ensure it's displayed as a block element */
-  visibility: visible; /* Ensure it's visible */
-  opacity: 1; /* Ensure full opacity */
-  color: #000; /* Ensure text color is not transparent */
+  display: block;
+  visibility: visible;
+  opacity: 1;
+  color: #000;
 }
