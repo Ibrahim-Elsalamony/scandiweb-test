@@ -14,7 +14,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $sku = $_POST['sku'];
 
     try {
-        $skuValidator = new Validator($db, 'products', 'sku');
+        $skuValidator = new Validator($db, 'sku', 'products');
         $exists = $skuValidator->checkUniqueSKU($sku);
 
         echo json_encode(['exists' => $exists]);

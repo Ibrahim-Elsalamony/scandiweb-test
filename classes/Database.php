@@ -1,5 +1,4 @@
 <?php
-// Include the config file
 require_once __DIR__ . '/../config/config.php';
 
 class Database
@@ -11,7 +10,6 @@ class Database
         $this->conn = null;
 
         try {
-            // Use constants defined in config.php for the connection
             $this->conn = new PDO(
                 "mysql:host=" . DB_HOST . ";dbname=" . DB_NAME . ";charset=" . DB_CHARSET,
                 DB_USER,

@@ -6,7 +6,8 @@ class Validator
     private $table;
     private $val;
 
-    public function __construct($db, $table = 'products', $val)
+    // Move $val before $table in the constructor
+    public function __construct($db, $val, $table = 'products')
     {
         $this->db = $db;
         $this->table = $table;
@@ -18,7 +19,6 @@ class Validator
         $stmt = $this->db->prepare("SELECT COUNT(*) FROM {$this->table} WHERE {$this->val} = ?");
         $stmt->execute([$val]);
         $count = $stmt->fetchColumn();
-
         return $count > 0;
     }
 }

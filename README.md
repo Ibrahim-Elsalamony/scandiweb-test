@@ -4,11 +4,9 @@ C:\xampp\htdocs\scandiweb-test
 │ ├── css
 │ │ └── styles.css
 │ └── js
-│ ├── components
-│ │ ├──AddProductForm.js
-│ │ ├──ProductItem.js
-│ │ └──ProductList.js
-│ └── vue-app.js
+│ ├──delete-action.js
+│ ├──main.js
+│ └──submit-form.js
 │  
 ├── classes
 │ ├── Book.php
@@ -18,15 +16,18 @@ C:\xampp\htdocs\scandiweb-test
 │ ├── Furniture.php
 │ ├── Product.php
 │ ├── ProductFactory.php
-│ └── Router.php
+│ ├── ProductHandler.php
+│ ├── Router.php
+│ └── Validator.php
 │
 ├── config
+│ ├── autoload.php
 │ ├── config.php
 │ └── routes.php
 │
 ├── endpoints
+│ ├── check_unique_sku.php
 │ ├── delete_products.php
-│ ├── fetch_products.php
 │ └── save_product.php
 │
 ├── views
@@ -35,10 +36,10 @@ C:\xampp\htdocs\scandiweb-test
 │ │ │ ├── add_content.php
 │ │ │ ├── footer.php
 │ │ │ └── header.php
-│ │ └── show
-│ │ ├── add_content.php
-│ │ ├── footer.php
-│ │ └── header.php
+│ │ └── product_list
+│ │ │ ├── content.php
+│ │ │ ├── footer.php
+│ │ │ └── header.php
 │ │
 │ ├── add.php
 │ ├── show.php
@@ -77,13 +78,12 @@ Require local
    - Choose the `database/scandiweb-test.sql` file and click **Go**.
 
 3. **Update Configuration:**
-   - Update the database connection settings in your PHP configuration file (`config.php`, `database.php`, etc.) to match your local database settings.
-=======
-**Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
+   - # Update the database connection settings in your PHP configuration file (`config.php`, `database.php`, etc.) to match your local database settings.
+     **Edit a file, create a new file, and clone from Bitbucket in under 2 minutes**
 
 When you're done, you can delete the content in this README and update the file with details for others getting started with your repository.
 
-*We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket.*
+_We recommend that you open this README in another tab as you perform the tasks below. You can [watch our video](https://youtu.be/0ocf7u76WSo) for a full demo of all the steps in this tutorial. Open the video in a new tab to avoid leaving Bitbucket._
 
 ---
 
@@ -94,7 +94,7 @@ You’ll start by editing this README file to learn how to edit a file in Bitbuc
 1. Click **Source** on the left side.
 2. Click the README.md link from the list of files.
 3. Click the **Edit** button.
-4. Delete the following text: *Delete this line to make a change to the README from Bitbucket.*
+4. Delete the following text: _Delete this line to make a change to the README from Bitbucket._
 5. After making your change, click **Commit** and then **Commit** again in the dialog. The commit page will open and you’ll see the change you just made.
 6. Go back to the **Source** page.
 
@@ -124,4 +124,5 @@ Use these steps to clone from SourceTree, our client for using the repository co
 4. Open the directory you just created to see your repository’s files.
 
 Now that you're more familiar with your Bitbucket repository, go ahead and add a new file locally. You can [push your change back to Bitbucket with SourceTree](https://confluence.atlassian.com/x/iqyBMg), or you can [add, commit,](https://confluence.atlassian.com/x/8QhODQ) and [push from the command line](https://confluence.atlassian.com/x/NQ0zDQ).
->>>>>>> 1fb19aafffd20620a4a0810e37637f8dd45b05c2
+
+> > > > > > > 1fb19aafffd20620a4a0810e37637f8dd45b05c2
