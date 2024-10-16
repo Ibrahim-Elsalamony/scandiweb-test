@@ -5,7 +5,7 @@ $database = new Database();
 $db = $database->getConnection();
 
 if (!$db) {
-    die(json_encode(["success" => false, "message" => "Database connection error"]));
+    throw new Exception("Database connection error");
 }
 
 $data = json_decode(file_get_contents('php://input'), true);

@@ -9,20 +9,14 @@ abstract class Product
     protected $db;
     protected $product_type;
 
-    public function __construct($db, $product_type, $sku = null, $name = null, $price = null, $id = null)
+    public function __construct($db)
     {
         $this->db = $db;
-        $this->id = $id;
-        $this->sku = $sku;
-        $this->name = $name;
-        $this->price = $price;
-        $this->product_type = $product_type;
     }
 
 
-    // Abstract method to save Product    
+    // Abstract methods
     abstract protected function saveSpecific();
-    // Abstract method to delete products
     abstract public function delete();
 
 
@@ -54,20 +48,17 @@ abstract class Product
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         } catch (PDOException $e) {
-            // Log the actual error for debugging (if needed)
             error_log($e->getMessage());
 
-            // Throw a general error message
             throw new Exception("Error fetching products");
         }
     }
 
-    // save Product
+    // General save method
     public function save()
     {
         $query = "INSERT INTO products (sku, name, price, product_type) VALUES (:sku, :name, :price, :product_type)";
         $stmt = $this->db->prepare($query);
-
         $stmt->bindParam(':sku', $this->sku);
         $stmt->bindParam(':name', $this->name);
         $stmt->bindParam(':price', $this->price);
@@ -81,12 +72,53 @@ abstract class Product
         }
     }
 
-    // delete Product
     protected function deleteFromDatabase($tableName)
     {
         $sql = "DELETE FROM $tableName WHERE id = :id";
         $stmt = $this->db->prepare($sql);
         $stmt->bindParam(':id', $this->id, PDO::PARAM_INT);
         return $stmt->execute();
+    }
+
+    // Setters and getters for common properties
+    public function setId($id)
+    {
+        $this->id = $id;
+    }
+    public function getId()
+    {
+        return $this->id;
+    }
+    public function setSku($sku)
+    {
+        $this->sku = $sku;
+    }
+    public function getSku()
+    {
+        return $this->sku;
+    }
+    public function setName($name)
+    {
+        $this->name = $name;
+    }
+    public function getName()
+    {
+        return $this->name;
+    }
+    public function setPrice($price)
+    {
+        $this->price = $price;
+    }
+    public function getPrice()
+    {
+        return $this->price;
+    }
+    public function setProduct_type($product_type)
+    {
+        $this->product_type = $product_type;
+    }
+    public function getProduct_type()
+    {
+        return $this->product_type;
     }
 }

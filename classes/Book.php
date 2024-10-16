@@ -5,12 +5,10 @@ class Book extends Product
 {
     private $weight;
 
-    public function __construct($db, $product_type, $sku, $name = null, $price = null, $weight = null, $id = null)
+    public function __construct($db)
     {
-        parent::__construct($db, $product_type, $sku, $name, $price, $id);
-        $this->weight = $weight;
+        parent::__construct($db);
     }
-
 
     // helpful method to save the product for Book table
     protected function saveSpecific()
@@ -37,5 +35,15 @@ class Book extends Product
     public function delete()
     {
         return $this->deleteFromDatabase('book') && $this->deleteFromDatabase('products');
+    }
+
+    // Setters and Getters for the properties
+    public function setWeight($weight)
+    {
+        $this->weight = $weight;
+    }
+    public function getWeight()
+    {
+        return $this->weight;
     }
 }

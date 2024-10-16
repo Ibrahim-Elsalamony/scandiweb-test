@@ -7,12 +7,9 @@ class Furniture extends Product
     private $width;
     private $length;
 
-    public function __construct($db, $product_type, $sku, $name = null, $price = null, $height = null, $width = null, $length = null, $id = null)
+    public function __construct($db)
     {
-        parent::__construct($db, $product_type, $sku, $name, $price, $id);
-        $this->height = $height;
-        $this->width = $width;
-        $this->length = $length;
+        parent::__construct($db);
     }
 
     // helpful method to save the product for Furniture table
@@ -42,5 +39,25 @@ class Furniture extends Product
     public function delete()
     {
         return $this->deleteFromDatabase('furniture') && $this->deleteFromDatabase('products');
+    }
+
+    // Setters and Getters for the properties
+    public function setDimensions($height, $width, $length)
+    {
+        $this->height = $height;
+        $this->width = $width;
+        $this->length = $length;
+    }
+    public function getHeight()
+    {
+        return $this->height;
+    }
+    public function getWidth()
+    {
+        return $this->width;
+    }
+    public function getLength()
+    {
+        return $this->length;
     }
 }

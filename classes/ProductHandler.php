@@ -20,34 +20,29 @@ class ProductHandler
         $name = $_POST['name'] ?? null;
         $price = $_POST['price'] ?? null;
         $product_type = $_POST['product_type'] ?? null;
-        $size = $_POST['size'] ?? null;
-        $weight = $_POST['weight'] ?? null;
-        $height = $_POST['height'] ?? null;
-        $width = $_POST['width'] ?? null;
-        $length = $_POST['length'] ?? null;
 
         if (empty($sku) || empty($name) || empty($price) || empty($product_type)) {
             throw new Exception("Required fields are missing.");
         }
 
-        $specificData = [];
-        switch ($product_type) {
-            case 'DVD':
-                $specificData['size'] = $size;
-                break;
-            case 'Book':
-                $specificData['weight'] = $weight;
-                break;
-            case 'Furniture':
-                $specificData['height'] = $height;
-                $specificData['width'] = $width;
-                $specificData['length'] = $length;
-                break;
-            default:
-                throw new Exception("Invalid product type.");
-        }
+        $product = ProductFactory::create($this->db, $product_type);
 
-        $product = ProductFactory::create($this->db, $product_type, $sku, $name, $price, $specificData);
+        $product->setSku($sku);
+        $product->setName($name);
+        $product->setProduct_type($product_type);
+        $product->setPrice($price);
+
+        foreach ($_POST as $key => $value) {
+            if ($key === 'sku' || $key === 'name' || $key === 'price' || $key === 'product_type') {
+                continue;
+            }
+
+            $setter = 'set' . ucfirst($key);
+
+            if (method_exists($product, $setter)) {
+                $product->$setter($value);
+            }
+        }
 
         if ($product->save()) {
             header("Location: /");

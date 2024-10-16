@@ -5,10 +5,9 @@ class DVD extends Product
 {
     private $size;
 
-    public function __construct($db, $product_type, $sku, $name = null, $price = null, $size = null, $id = null)
+    public function __construct($db)
     {
-        parent::__construct($db, $product_type, $sku, $name, $price, $id);
-        $this->size = $size;
+        parent::__construct($db);
     }
 
     // helpful method to save the product for DVD table
@@ -36,5 +35,15 @@ class DVD extends Product
     public function delete()
     {
         return $this->deleteFromDatabase('dvd') && $this->deleteFromDatabase('products');
+    }
+
+    // Setters and Getters for the properties
+    public function setSize($size)
+    {
+        $this->size = $size;
+    }
+    public function getSize()
+    {
+        return $this->size;
     }
 }
